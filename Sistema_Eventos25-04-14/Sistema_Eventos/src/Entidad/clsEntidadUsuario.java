@@ -8,55 +8,99 @@ package Entidad;
 
 /**
  *
- * @author Juan
+ * @author Charlie
  */
-public class clsEntidadUsuario {
+public class clsEntidadUsuario extends clsEntidadPersona{
+    
+    String usuario;
+    String password;
+    String indicadorInscripcion;
+    String indicadorEvento;
+    String indicadorGasto;
+    String indicadorPrograma;
+    String indicadorComision;
 
-    public String getId_usu() {
-        return id_usu;
+    public String getIndicadorComision() {
+        return indicadorComision;
     }
 
-    public void setId_usu(String id_usu) {
-        this.id_usu = id_usu;
+    public void setIndicadorComision(String indicadorComision) {
+        this.indicadorComision = indicadorComision;
+    }
+    String indicadorUsuario;
+    String indicadorActivo;
+
+    public int getIdPersona() {
+        return idPersona;
     }
 
-
-    public String getNomb_usu() {
-        return nomb_usu;
+    public void setIdPersona(int idPersona) {
+        this.idPersona = idPersona;
     }
 
-    public void setNomb_usu(String nomb_usu) {
-        this.nomb_usu = nomb_usu;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public String getPass_usu() {
-        return pass_usu;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public void setPass_usu(String pass_usu) {
-        this.pass_usu = pass_usu;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getIndicadorInscripcion() {
+        return indicadorInscripcion;
+    }
+
+    public void setIndicadorInscripcion(String indicadorInscripcion) {
+        this.indicadorInscripcion = indicadorInscripcion;
+    }
+
+    public String getIndicadorEvento() {
+        return indicadorEvento;
+    }
+
+    public void setIndicadorEvento(String indicadorEvento) {
+        this.indicadorEvento = indicadorEvento;
+    }
+
+    public String getIndicadorGasto() {
+        return indicadorGasto;
+    }
+
+    public void setIndicadorGasto(String indicadorGasto) {
+        this.indicadorGasto = indicadorGasto;
+    }
+
+    public String getIndicadorPrograma() {
+        return indicadorPrograma;
+    }
+
+    public void setIndicadorPrograma(String indicadorPrograma) {
+        this.indicadorPrograma = indicadorPrograma;
+    }
+
+    public String getIndicadorUsuario() {
+        return indicadorUsuario;
+    }
+
+    public void setIndicadorUsuario(String indicadorUsuario) {
+        this.indicadorUsuario = indicadorUsuario;
+    }
+
+    public String getIndicadorActivo() {
+        return indicadorActivo;
+    }
+
+    public void setIndicadorActivo(String indicadorActivo) {
+        this.indicadorActivo = indicadorActivo;
     }
     
-     public String getNivel_usu() {
-        return nivel_usu;
-    }
-
-    public void setNivel_usu(String nivel_usu) {
-        this.nivel_usu = nivel_usu;
-    }
-
-    public String getEstado_usu() {
-        return estado_usu;
-    }
-
-    public void setEstado_usu(String estado_usu) {
-        this.estado_usu = estado_usu;
-    }
-
-  
-    private String id_usu;
-    private String nomb_usu;
-    private String pass_usu;
-    private String nivel_usu;
-    private String estado_usu;
+    
 }

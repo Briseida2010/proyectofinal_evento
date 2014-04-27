@@ -108,7 +108,7 @@ public class frmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        usu  = txtUsuario.getText();
+/*        usu  = txtUsuario.getText();
         pass = txtPasword.getText();
         
         clsUsuario usuario = new clsUsuario();
@@ -117,9 +117,9 @@ public class frmLogin extends javax.swing.JFrame {
             boolean existe = false;
             int f,i;
             f= dtm.getRowCount();
-            /*if (f>0)
+            if (f>0)
                 for(i=0;i<f;i++); 
-                       dtm.removeRow(0); */
+                       dtm.removeRow(0); 
                 while(rs.next()){
                     if(usu.equals(rs.getString(2))&& pass.equals(rs.getString(3))){
                        if("Activo".equals(rs.getString(5))){
@@ -148,7 +148,10 @@ public class frmLogin extends javax.swing.JFrame {
         
         }catch(Exception ex){
             ex.printStackTrace();
-        }
+        }*/
+         MDIPrincipal MDI = new MDIPrincipal();
+                        MDI.show();
+                        this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

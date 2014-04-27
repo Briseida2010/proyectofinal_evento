@@ -17,24 +17,13 @@ public class clsConexion {
     public Connection getConnetion(){
         try{
             MysqlConnectionPoolDataSource ds = new MysqlConnectionPoolDataSource();
-            ds.setServerName("localhost");
+            ds.setServerName("uptapps.cloudapp.net");
             ds.setPort(3306);
             ds.setDatabaseName("db_eventos");
-            cnx = ds.getConnection("root","");
-            
-            
-            
-            
+            cnx = ds.getConnection("evento","12345");
         }catch(Exception ex){
             ex.printStackTrace();
         }
         return cnx;
-        
-        
-        
-        
     }
-    
-    
-    
 }

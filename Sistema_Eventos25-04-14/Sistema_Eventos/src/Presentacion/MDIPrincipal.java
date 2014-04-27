@@ -674,7 +674,7 @@ public class MDIPrincipal extends javax.swing.JFrame {
             MCertificado.setEnabled(false);
             //botones desactivados
             btnEventos.setEnabled(false);
-            btnUsuario.setEnabled(false);
+            btnUsuario.setEnabled(true);
             btnOrganizador.setEnabled(false);
             btnPonentes.setEnabled(false);
             btnConsultas.setEnabled(false);

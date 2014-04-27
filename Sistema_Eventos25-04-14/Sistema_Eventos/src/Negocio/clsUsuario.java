@@ -10,7 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class clsUsuario {
-    private Connection cnx = new clsConexion().getConnetion();
+    
+    private static Connection cnx = new clsConexion().getConnetion();
+    
     public ResultSet LoginUsuario(String usu,String pass) throws Exception{
         ResultSet rs = null;
         try{
@@ -25,103 +27,71 @@ public class clsUsuario {
         }
     }
             
-      public void agregarUsuario (clsEntidadUsuario Usuario){
-
-try{
-CallableStatement st = cnx.prepareCall("{call sp_I_Usuario(?,?,?,?,?)}");
-st.setString("pid_usu", Usuario.getId_usu());
-st.setString("pnomb_usu", Usuario.getNomb_usu());
-st.setString("ppass_usu", Usuario.getPass_usu());
-st.setString("pnivel_usu", Usuario.getNivel_usu());
-st.setString("pestado_usu", Usuario.getEstado_usu());
-
-st.execute();
-
-} catch(SQLException ex){
-ex.printStackTrace();
-}
-
-}
-
-
-public void modificarUsuario (String codigo, clsEntidadUsuario Usuario){
-try{
-CallableStatement st = cnx.prepareCall("{call sp_U_Usuario(?,?,?,?,?)}");
-st.setString("pid_usu", codigo);
-st.setString("pnomb_usu", Usuario.getNomb_usu());
-st.setString("ppass_usu", Usuario.getPass_usu());
-st.setString("pnivel_usu", Usuario.getNivel_usu());
-st.setString("pestado_usu", Usuario.getEstado_usu());
-
-st.executeUpdate();
-} catch (SQLException ex){
-ex.printStackTrace();
-} 
-}
-
-
-public void eliminarUsuario (String codigo){
-try{
-CallableStatement st = cnx.prepareCall("{call sp_D_Usuario(?)}");
-st.setString("pid_usu", codigo); 
-st.execute();
-} catch (SQLException ex){
-ex.printStackTrace();
-} 
-}
-
- public ResultSet consultarUsuario() throws Exception{
-        ResultSet rs = null;
+    public static void agregarUsuario (clsEntidadUsuario objUsuario){
         try{
-            CallableStatement st = cnx.prepareCall("{call sp_S_Usuario()}");
-            rs = st.executeQuery();
-            return rs;
-            }
-        catch(SQLException ex){
-                    throw ex;
-                    }
-        }
- 
- 
-   public ResultSet consultarUsuarioCriterio(String criterio, String busqueda) throws Exception{
-        ResultSet rs = null;
-        try{
-            CallableStatement st = cnx.prepareCall("{call SP_S_Usuarios_Criterio(?,?)}");
-            st.setString("pcriterio", criterio);
-            st.setString("pbusqueda", busqueda);
-            rs = st.executeQuery();
-            return rs;
-            }
-        catch(SQLException ex){
-                    throw ex;
-                    }
-        }
-
-
-public ArrayList listarUsuarios(){
-
-ArrayList Usuarios = new ArrayList();
-try{
-CallableStatement st = cnx.prepareCall("{call SP_S_Usuario()}");
-ResultSet resultSet = st.executeQuery();
-
-while (resultSet.next()){
-clsEntidadUsuario usuario = new clsEntidadUsuario();
-usuario.setId_usu(resultSet.getString("id_usu"));
-usuario.setNomb_usu(resultSet.getString("nomb_usu"));
-usuario.setPass_usu(resultSet.getString("pass_usu"));
-usuario.setNivel_usu(resultSet.getString("nivel_usu"));
-usuario.setEstado_usu(resultSet.getString("estado_usu")); 
-
-Usuarios.add(usuario);
-}
-return Usuarios;
-
-} catch(SQLException ex){
-ex.printStackTrace();
-return null;
-}
-
-}     
+            CallableStatement statement = cnx.prepareCall("{call sp_I_Usuario(?,?,?,?,?,?,?,?,?,?,?,?)}");
+            statement = asignarValores(statement,objUsuario);
+            statement.execute();
             
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void modificarUsuario (clsEntidadUsuario objUsuario){
+        try{
+            CallableStatement statement = cnx.prepareCall("{call sp_I_Usuario(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            statement.setInt("pidPersona", objUsuario.getIdPersona());
+            statement = asignarValores(statement,objUsuario);
+            statement.executeUpdate();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    public static ArrayList<clsEntidadUsuario> listarUsuarios(String busqueda){
+        ArrayList<clsEntidadUsuario> listaUsuarios = new ArrayList<clsEntidadUsuario>();
+        try{
+            ResultSet rs;
+            CallableStatement statement = cnx.prepareCall("{call sp_S_Usuario(?)}");
+            statement.setString("pbusqueda", busqueda);
+            rs = statement.executeQuery();          
+            while(rs.next()){
+                clsEntidadUsuario objUsuario = new clsEntidadUsuario();
+                objUsuario.setIdPersona(rs.getInt("idPersona"));
+                objUsuario.setNombres(rs.getString("nombres"));
+                objUsuario.setApellidos(rs.getString("apellidos"));
+                objUsuario.setEmail(rs.getString("email"));
+                objUsuario.setUsuario(rs.getString("usuario"));
+                objUsuario.setPassword(rs.getString("password"));
+                objUsuario.setIndicadorInscripcion(rs.getString("indicadorInscripcion"));
+                objUsuario.setIndicadorEvento(rs.getString("indicadorEvento"));
+                objUsuario.setIndicadorGasto(rs.getString("indicadorGasto"));
+                objUsuario.setIndicadorComision(rs.getString("indicadorComision"));
+                objUsuario.setIndicadorPrograma(rs.getString("indicadorPrograma"));
+                objUsuario.setIndicadorActivo(rs.getString("indicadorActivo"));
+                listaUsuarios.add(objUsuario);
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return listaUsuarios;
+    }
+    
+    private static CallableStatement asignarValores(CallableStatement statement, clsEntidadUsuario objUsuario) throws SQLException{
+        statement.setString("pnombres", objUsuario.getNombres());
+        statement.setString("papellidos", objUsuario.getApellidos());
+        statement.setString("pemail", objUsuario.getEmail());
+        statement.setString("pusuario", objUsuario.getUsuario());
+        statement.setString("ppassword", objUsuario.getPassword());
+        statement.setString("pindicadorInscripcion", objUsuario.getIndicadorInscripcion());
+        statement.setString("pindicadorEvento", objUsuario.getIndicadorEvento());
+        statement.setString("pindicadorGasto", objUsuario.getIndicadorGasto());
+        statement.setString("pindicadorPrograma", objUsuario.getIndicadorPrograma());
+        statement.setString("pindicadorComision", objUsuario.getIndicadorComision());
+        statement.setString("pindicadorUsuario", objUsuario.getIndicadorUsuario());
+        statement.setString("pindicadorActivo", objUsuario.getIndicadorActivo());
+        return statement;
+    }
 }
+    

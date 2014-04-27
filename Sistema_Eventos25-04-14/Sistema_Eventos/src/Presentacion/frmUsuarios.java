@@ -8,6 +8,7 @@ package Presentacion;
 
 import Entidad.*;
 import Negocio.*;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.*;
@@ -15,112 +16,72 @@ import javax.swing.table.DefaultTableModel;
 
 public class frmUsuarios extends javax.swing.JInternalFrame {
 
-   String codigo;
-           int registros;
-           String id[]=new String[100];
-           static int intContador;
-    
+    ArrayList<clsEntidadUsuario> listaUsuarios;  
     
     public frmUsuarios() {
         initComponents();
-        cargarcomboNivel();
-        cargarcomboEstado();
-        desactivarCampos();
-        activarBotones(true,false,false,false);
-        actualizarTabla();
-        
-        
+        cargarTabla("");
     }
     
-    void activarCampos(){
-        txtUsuario.setEnabled(true);
-        txtPassword.setEnabled(true);
-        cboNivel.setEnabled(true);
-        cboEstado.setEnabled(true);
-    }
-    
-    void desactivarCampos(){
-        txtUsuario.setEnabled(false);
-        txtPassword.setEnabled(false);
-        cboNivel.setEnabled(false);
-        cboEstado.setEnabled(false);
-    }
-    
-      void limpiarCampos(){
-        txtUsuario.setText("");
-        txtPassword.setText("");
-    }
-      
-       void activarBotones(boolean n,boolean g,boolean m,boolean e){
-        btnNuevo.setEnabled(n);
-        btnGrabar.setEnabled(g);
-        btnModificar.setEnabled(m);
-        btnEliminar.setEnabled(e);
-    }
-       
-        void cargarcomboNivel(){
-        cboNivel.removeAllItems();
-        cboNivel.addItem("Administrador");
-        cboNivel.addItem("Cliente");
-        cboNivel.addItem("Usuario");
-    }
-    
-        void cargarcomboEstado(){
-        cboEstado.removeAllItems();
-        cboEstado.addItem("Activo");
-        cboEstado.addItem("Inactivo");
-    }
-        
-        void actualizarTabla(){
-        String titulos[] = {"Codigo","Usuario","Password","Nivel","Estado"};
-        clsUsuario usuarios = new clsUsuario();
-        ArrayList<clsEntidadUsuario> user = usuarios.listarUsuarios();
-        Iterator iterator = user.iterator();
-        DefaultTableModel dtm = new DefaultTableModel(null,titulos);
-        
-        String fila[] = new String[5];
-        while(iterator.hasNext()){
-            clsEntidadUsuario usu = new clsEntidadUsuario();
-            usu = (clsEntidadUsuario) iterator.next();
-            fila[0] = usu.getId_usu();
-            fila[1] = usu.getNomb_usu();
-            fila[2] = usu.getPass_usu();
-            fila[3] = usu.getNivel_usu();
-            fila[4] = usu.getEstado_usu();
-            
+    private void cargarTabla(String busqueda){
+        listaUsuarios = clsUsuario.listarUsuarios(busqueda);
+        DefaultTableModel dtm = (DefaultTableModel)tblUsuario.getModel();
+        FrmMaster.limpiarTabla(tblUsuario);
+        for(clsEntidadUsuario objUsuario : listaUsuarios){
+            Object[] fila = new Object[15];
+            fila[0] = objUsuario.getIdPersona();
+            fila[1] = objUsuario.getNombres();
+            fila[2] = objUsuario.getApellidos();
+            fila[3] = objUsuario.getEmail();
+            fila[4] = objUsuario.getUsuario();
+            fila[5] = objUsuario.getPassword();
+            fila[6] = objUsuario.getIndicadorInscripcion();
+            fila[7] = objUsuario.getIndicadorEvento();
+            fila[8] = objUsuario.getIndicadorGasto();
+            fila[9] = objUsuario.getIndicadorPrograma();
+            fila[10] = objUsuario.getIndicadorUsuario();
+            fila[11] = objUsuario.getIndicadorActivo();
             dtm.addRow(fila);
-            
-            tblUsuario.setModel(dtm);
-            
-            
         }
-      }
-        
-        
-    void seleccionarTabla(){
-        int fila;
-        DefaultTableModel dtm = new DefaultTableModel();
-        fila = tblUsuario.getSelectedRow();
+        tblUsuario.setModel(dtm);
+    }
+    
+    private void seleccionarTabla(){
+        int fila = tblUsuario.getSelectedRow();
         if (fila==-1){
             JOptionPane.showMessageDialog(null, "Debes seleccionar un R");
-            
         }else{
-            dtm = (DefaultTableModel)tblUsuario.getModel();
-            txtid.setText((String) dtm.getValueAt(fila, 0));
-            txtUsuario.setText((String)dtm.getValueAt(fila, 1));
-            txtPassword.setText((String)dtm.getValueAt(fila, 2));
-            cboNivel.setSelectedItem((String) dtm.getValueAt(fila,3));
-            cboEstado.setSelectedItem((String) dtm.getValueAt(fila,4));
-            activarBotones(true,false,true,true);
-            activarCampos();
-  
-            
+            clsEntidadUsuario objUsuario = listaUsuarios.get(fila);
+            txtUsuario.setText(objUsuario.getUsuario());
+            txtPassword.setText(objUsuario.getPassword());
+            txtNombre.setText(objUsuario.getNombres());
+            txtApellidos.setText(objUsuario.getApellidos());
+            FrmMaster.cambiarEstadoCheckBox(chkActivo, objUsuario.getIndicadorActivo());
+            FrmMaster.cambiarEstadoCheckBox(chkEvento, objUsuario.getIndicadorEvento());
+            FrmMaster.cambiarEstadoCheckBox(chkInscripcion, objUsuario.getIndicadorInscripcion());
+            FrmMaster.cambiarEstadoCheckBox(chkGasto, objUsuario.getIndicadorGasto());
+            FrmMaster.cambiarEstadoCheckBox(chkPrograma, objUsuario.getIndicadorPrograma());
+            FrmMaster.cambiarEstadoCheckBox(chkComision, objUsuario.getIndicadorComision());
+            FrmMaster.cambiarEstadoCheckBox(chkUsuario, objUsuario.getUsuario());
         }
     }
         
-
-        
-        
+    private void guardar(){
+        clsEntidadUsuario objUsuario = new clsEntidadUsuario();
+        objUsuario.setNombres(txtNombre.getText());
+        objUsuario.setApellidos(txtApellidos.getText());
+        objUsuario.setUsuario(txtUsuario.getText());
+        objUsuario.setPassword(txtPassword.getText());
+        objUsuario.setIndicadorActivo(FrmMaster.getIndicadorCheckBox(chkActivo));
+        objUsuario.setIndicadorComision(FrmMaster.getIndicadorCheckBox(chkComision));
+        objUsuario.setIndicadorEvento(FrmMaster.getIndicadorCheckBox(chkEvento));
+        objUsuario.setIndicadorGasto(FrmMaster.getIndicadorCheckBox(chkGasto));
+        objUsuario.setIndicadorInscripcion(FrmMaster.getIndicadorCheckBox(chkInscripcion));
+        objUsuario.setIndicadorPrograma(FrmMaster.getIndicadorCheckBox(chkPrograma));
+        objUsuario.setIndicadorUsuario(FrmMaster.getIndicadorCheckBox(chkUsuario));
+        clsUsuario.agregarUsuario(objUsuario);
+        cargarTabla("");
+    }
  
     /**
      * This method is called from within the constructor to initialize the form.
@@ -132,24 +93,32 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JPasswordField();
-        cboNivel = new javax.swing.JComboBox();
-        cboEstado = new javax.swing.JComboBox();
-        btnNuevo = new javax.swing.JButton();
-        btnGrabar = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuario = new javax.swing.JTable();
+        pnlForm = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        chkActivo = new javax.swing.JCheckBox();
+        chkGasto = new javax.swing.JCheckBox();
+        chkInscripcion = new javax.swing.JCheckBox();
+        chkEvento = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
-        txtid = new javax.swing.JTextField();
+        chkPrograma = new javax.swing.JCheckBox();
+        chkComision = new javax.swing.JCheckBox();
+        chkUsuario = new javax.swing.JCheckBox();
+        txtApellidos = new javax.swing.JTextField();
+        pnlBotones = new javax.swing.JPanel();
+        btnModificar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -157,50 +126,171 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         jLabel1.setText("Mantenimiento de Usuarios");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setText("ID Usuario:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, -1));
+        tblUsuario.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "idPersona", "Nombre", "Apellidos", "Email", "Usuario", "Password", "Inscripcion", "Evento", "Gasto", "Programa", "Usuario", "Activo"
+            }
+        ));
+        tblUsuario.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsuarioMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblUsuario);
+        tblUsuario.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tblUsuario.getColumnModel().getColumnCount() > 0) {
+            tblUsuario.getColumnModel().getColumn(0).setMinWidth(0);
+            tblUsuario.getColumnModel().getColumn(0).setMaxWidth(0);
+            tblUsuario.getColumnModel().getColumn(5).setMinWidth(0);
+            tblUsuario.getColumnModel().getColumn(5).setMaxWidth(0);
+            tblUsuario.getColumnModel().getColumn(6).setMinWidth(0);
+            tblUsuario.getColumnModel().getColumn(6).setMaxWidth(0);
+            tblUsuario.getColumnModel().getColumn(7).setMinWidth(0);
+            tblUsuario.getColumnModel().getColumn(7).setMaxWidth(0);
+            tblUsuario.getColumnModel().getColumn(8).setMinWidth(0);
+            tblUsuario.getColumnModel().getColumn(8).setMaxWidth(0);
+            tblUsuario.getColumnModel().getColumn(9).setMinWidth(0);
+            tblUsuario.getColumnModel().getColumn(9).setMaxWidth(0);
+            tblUsuario.getColumnModel().getColumn(10).setMinWidth(0);
+            tblUsuario.getColumnModel().getColumn(10).setMaxWidth(0);
+            tblUsuario.getColumnModel().getColumn(11).setMinWidth(0);
+            tblUsuario.getColumnModel().getColumn(11).setMaxWidth(0);
+        }
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 690, 180));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel11.setText("Usuario:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Password:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel5.setText("Nivel:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel9.setText("Nombre:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel6.setText("Estado:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, -1));
-        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 80, -1));
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 80, -1));
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel10.setText("Apellidos:");
 
-        cboNivel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cboNivel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboNivelActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cboNivel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, -1));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel8.setText("Estado:");
 
-        cboEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cboEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
+        chkActivo.setText("Activo");
 
-        btnNuevo.setText("Nuevo");
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, 80, -1));
+        chkGasto.setText("Gasto");
 
-        btnGrabar.setText("Grabar");
-        btnGrabar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGrabarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnGrabar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 80, -1));
+        chkInscripcion.setText("Inscripcion");
+
+        chkEvento.setText("Evento");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel7.setText("Permisos:");
+
+        chkPrograma.setText("Programa");
+
+        chkComision.setText("Comision");
+
+        chkUsuario.setText("Usuario");
+
+        javax.swing.GroupLayout pnlFormLayout = new javax.swing.GroupLayout(pnlForm);
+        pnlForm.setLayout(pnlFormLayout);
+        pnlFormLayout.setHorizontalGroup(
+            pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormLayout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(31, 31, 31)
+                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel7))
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(17, 17, 17)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(80, 80, 80)
+                        .addComponent(chkEvento)
+                        .addGap(43, 43, 43)
+                        .addComponent(chkPrograma))
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel8)
+                        .addGap(14, 14, 14)
+                        .addComponent(chkActivo))
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(pnlFormLayout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlFormLayout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(29, 29, 29)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(60, 60, 60)
+                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(pnlFormLayout.createSequentialGroup()
+                                .addComponent(chkInscripcion)
+                                .addGap(21, 21, 21)
+                                .addComponent(chkComision))
+                            .addGroup(pnlFormLayout.createSequentialGroup()
+                                .addComponent(chkGasto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(chkUsuario)))))
+                .addGap(34, 34, 34))
+        );
+        pnlFormLayout.setVerticalGroup(
+            pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFormLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(8, 8, 8)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel4))
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chkEvento)
+                    .addComponent(chkPrograma))
+                .addGap(8, 8, 8)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel9))
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chkInscripcion)
+                    .addComponent(chkComision))
+                .addGap(8, 8, 8)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(chkUsuario)
+                        .addComponent(chkGasto)))
+                .addGap(22, 22, 22)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel8))
+                    .addComponent(chkActivo))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(pnlForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 490, 220));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -208,15 +298,20 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                 btnModificarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 80, -1));
 
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 80, -1));
+
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -224,7 +319,6 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 180, 80, -1));
 
         jButton6.setText("Salir");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -232,32 +326,38 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, 80, -1));
 
-        tblUsuario.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tblUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblUsuarioMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblUsuario);
+        javax.swing.GroupLayout pnlBotonesLayout = new javax.swing.GroupLayout(pnlBotones);
+        pnlBotones.setLayout(pnlBotonesLayout);
+        pnlBotonesLayout.setHorizontalGroup(
+            pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBotonesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlBotonesLayout.setVerticalGroup(
+            pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotonesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNuevo)
+                .addGap(5, 5, 5)
+                .addComponent(btnGuardar)
+                .addGap(15, 15, 15)
+                .addComponent(btnModificar)
+                .addGap(15, 15, 15)
+                .addComponent(btnCancelar)
+                .addGap(35, 35, 35)
+                .addComponent(jButton6)
+                .addContainerGap())
+        );
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 540, 180));
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel7.setText("Usuario:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, -1, -1));
-        getContentPane().add(txtid, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 80, 20));
+        getContentPane().add(pnlBotones, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 40, 110, 220));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -267,98 +367,58 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblUsuarioMouseClicked
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        limpiarCampos();
-        activarCampos();
-        txtUsuario.requestFocus();
-        activarBotones(false,true,false,false);
+      FrmMaster.LimpiarCampos(pnlForm);
+      FrmMaster.BloquearBotones(pnlBotones, "Nuevo");
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
-        clsUsuario usuario = new clsUsuario();
-        clsEntidadUsuario usu = new clsEntidadUsuario();
-        usu.setId_usu(txtid.getText());
-        usu.setNomb_usu(txtUsuario.getText());
-        usu.setPass_usu(txtPassword.getText());
-        usu.setNivel_usu(cboNivel.getSelectedItem().toString());
-        usu.setEstado_usu(cboEstado.getSelectedItem().toString());
-        usuario.modificarUsuario(codigo, usu);
-        actualizarTabla();
-        limpiarCampos();
-        activarBotones(true,true,true,false);
-        desactivarCampos();
-        
-    }//GEN-LAST:event_btnGrabarActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        guardar();
+        FrmMaster.BloquearBotones(pnlBotones, "Guardar");
+        FrmMaster.LimpiarCampos(pnlForm);
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-       clsUsuario usuario = new clsUsuario();
-        clsEntidadUsuario usu = new clsEntidadUsuario();
-        usu.setId_usu(txtid.getText());
-        usu.setNomb_usu(txtUsuario.getText());
-        usu.setPass_usu(txtPassword.getText());
-        usu.setNivel_usu(cboNivel.getSelectedItem().toString());
-        usu.setEstado_usu(cboEstado.getSelectedItem().toString());
-        usuario.modificarUsuario(codigo, usu);
-        actualizarTabla();
-        limpiarCampos();
-        activarBotones(true,true,true,false);
-        desactivarCampos();
+       FrmMaster.BloquearBotones(pnlBotones, "Modificar");
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       int r;
-       r = JOptionPane.showConfirmDialog(null, "¿Esta seguro de Eliminar el registro?","Pregunta",0);
-       
-       if(r == 0){
-           clsUsuario usuarios = new clsUsuario();
-           usuarios.eliminarUsuario(codigo);
-           actualizarTabla();
-           limpiarCampos();
-           desactivarCampos();
-       }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        int r;
-       r = JOptionPane.showConfirmDialog(null, "¿Esta seguro de cancelar la operacion?","Pregunta",0);
-       
-       if(r == 0){
-         
-           limpiarCampos();
-           activarBotones(true,false,false,false);
-           desactivarCampos();
-       }
+        FrmMaster.BloquearBotones(pnlBotones, "Cancelar");
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void cboNivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNivelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboNivelActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGrabar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JComboBox cboEstado;
-    private javax.swing.JComboBox cboNivel;
+    private javax.swing.JCheckBox chkActivo;
+    private javax.swing.JCheckBox chkComision;
+    private javax.swing.JCheckBox chkEvento;
+    private javax.swing.JCheckBox chkGasto;
+    private javax.swing.JCheckBox chkInscripcion;
+    private javax.swing.JCheckBox chkPrograma;
+    private javax.swing.JCheckBox chkUsuario;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel pnlBotones;
+    private javax.swing.JPanel pnlForm;
     private javax.swing.JTable tblUsuario;
+    private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;
-    private javax.swing.JTextField txtid;
     // End of variables declaration//GEN-END:variables
 
 
