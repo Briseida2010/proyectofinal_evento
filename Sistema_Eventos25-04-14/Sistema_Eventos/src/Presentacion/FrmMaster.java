@@ -116,7 +116,7 @@ public class FrmMaster {
                     btn.setEnabled(false);
                 }
                 else if(btn.getText().equals("Modificar")){
-                    btn.setEnabled(false);
+                    btn.setEnabled(true);
                 }                
             }                 
         }

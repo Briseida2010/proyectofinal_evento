@@ -24,6 +24,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
         initComponents();
         cargarTabla("");
         FrmMaster.BloquearControles(pnlForm);
+        FrmMaster.BloquearBotones(pnlForm, "Cancelar");
     }
             
     @Override
@@ -186,7 +187,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
             tblUsuario.getColumnModel().getColumn(11).setMaxWidth(0);
         }
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 690, 180));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 690, 180));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setText("Usuario:");
@@ -408,8 +409,14 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        isNuevoActivo=false;
-        FrmMaster.BloquearBotones(pnlBotones, "Modificar");
+        if(tblUsuario.getSelectedRow()>0){
+           isNuevoActivo=false;
+            FrmMaster.HabilitarControles(pnlForm);
+            FrmMaster.BloquearBotones(pnlBotones, "Modificar"); 
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un registro!");
+        }
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
