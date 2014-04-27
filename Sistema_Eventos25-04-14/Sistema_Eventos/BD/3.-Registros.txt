@@ -23,8 +23,8 @@ call sp_I_Participante('2','Miguelon','Bustinza','mbustinza@hotmail.com','978983
 call sp_I_Participante('3','Alfonso','Rosario','arosario@hotmail.com','938432812');
 
 call sp_I_Usuario('1','elanchipa','123','Administrador','Activo');
-call sp_I_Usuario('2','ggallegos','123','Cliente','Activo');
-call sp_I_Usuario('3','ppamela','123','Usuario','Inactivo');
+
+
 
 call sp_I_Organizador('1','Luis','Palacios','12345678','975678123');
 call sp_I_Organizador('2','Franciso','Acosta','87654321','897567234');
