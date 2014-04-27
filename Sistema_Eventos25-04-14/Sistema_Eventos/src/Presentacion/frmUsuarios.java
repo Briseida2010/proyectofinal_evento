@@ -159,7 +159,6 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
                 "idPersona", "Nombre", "Apellidos", "Email", "Usuario", "Password", "Inscripcion", "Evento", "Gasto", "Programa", "Usuario", "Activo"
             }
         ));
-        tblUsuario.setColumnSelectionAllowed(true);
         tblUsuario.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -279,24 +278,22 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
                     .addComponent(jLabel7))
                 .addGap(8, 8, 8)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel4))
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(chkEvento)
-                    .addComponent(chkPrograma))
+                    .addComponent(chkPrograma)
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(8, 8, 8)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel9))
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(chkInscripcion)
-                    .addComponent(chkComision))
+                    .addComponent(chkComision)
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(8, 8, 8)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFormLayout.createSequentialGroup()

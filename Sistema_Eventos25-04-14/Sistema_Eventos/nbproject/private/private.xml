@@ -3,13 +3,30 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/azteca/Downloads/Sistema_Eventos25-04-14/Sistema_Eventos/src/Conexion/clsConexion.java</file>
-            <file>file:/C:/Users/azteca/Downloads/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/frmPonente.java</file>
-            <file>file:/C:/Users/azteca/Downloads/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/frmTipoComision.java</file>
-            <file>file:/C:/Users/azteca/Downloads/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/frmLogin.java</file>
-            <file>file:/C:/Users/azteca/Downloads/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/frmOrganizador.java</file>
-            <file>file:/C:/Users/azteca/Downloads/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/MDIPrincipal.java</file>
-            <file>file:/C:/Users/azteca/Downloads/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/FrmConsultaOrganizador.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/FrmConsultaOrganizador.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Entidad/clsEntidadInscripcion.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/IMantenimiento.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/MDIPrincipal.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Entidad/clsEntidadEvento.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Entidad/clsEntidadComision.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/FrmMaster.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/FrmConsultaUsuarioCriterio.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Entidad/clsEntidadPersona.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Negocio/clsUsuario.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/frmLogin.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/FrmConsultaRecursos.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/FrmConsultaOrganizadorCriterio.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Conexion/clsConexion.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/Escritorio.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/frmUsuarios.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/FrmConsultaParticipante.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Entidad/clsEntidadGasto.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/FrmConsultaUsuario.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Entidad/clsEntidadPrograma.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Entidad/clsEntidadPonente.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/frmRecurso.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Entidad/clsEntidadUsuario.java</file>
+            <file>file:/C:/Users/Charlie/Documents/GitHub/proyectofinal_evento/Sistema_Eventos25-04-14/Sistema_Eventos/src/Presentacion/frmTipoComision.java</file>
         </group>
     </open-files>
 </project-private>
