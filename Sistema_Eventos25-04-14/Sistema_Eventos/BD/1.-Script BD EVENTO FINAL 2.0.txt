@@ -1,0 +1,92 @@
+create database db_Eventos;
+use db_Eventos;
+
+create table Organizador(
+   id_org INT(10) NOT NULL auto_increment PRIMARY KEY,
+	nomb_org varchar(30) NOT NULL,
+	apel_org varchar(50) NOT NULL,
+	dni_org varchar(8) NOT NULL,
+	cel_org varchar(20) NOT NULL
+	);
+	
+	
+CREATE TABLE Usuario(
+	id_usu int(10) NOT NULL auto_increment PRIMARY KEY,
+	nomb_usu varchar(30) NOT NULL,
+	pass_usu varchar(50) NOT NULL,
+	nivel_usu varchar(35) NOT NULL,
+	estado_usu varchar(15) NOT NULL
+	);
+	
+CREATE TABLE TipoEvento(
+   id_tipoevento int(10) NOT NULL auto_increment PRIMARY KEY,
+	nomb_tipoevento varchar(100) NOT NULL
+);
+
+create table Evento(
+   id_evento int(10) NOT NULL auto_increment PRIMARY KEY,
+   id_tipoevento int(10) NOT NULL,
+	id_usu int(10) NOT NULL,
+	id_org int(10) NOT NULL,
+	fechainicio_evento varchar(30) NOT NULL,
+	fechafinal_evento varchar(30) NOT NULL,
+   nomb_evento varchar(30) NOT NULL,
+	inf_evento varchar(30) NOT NULL,
+	lugar_evento varchar(30) NOT NULL,
+	FOREIGN KEY(id_tipoevento) REFERENCES TipoEvento(id_tipoevento),
+	FOREIGN KEY(id_usu) REFERENCES Usuario(id_usu),
+	FOREIGN KEY(id_org) REFERENCES Organizador(id_org)
+);
+
+CREATE  TABLE Tipocomision(
+	id_Tipocomi int(10) NOT NULL auto_increment PRIMARY KEY,
+	nomb_Tipocomi VARCHAR(45) NOT NULL
+ );
+ 
+
+CREATE  TABLE Recurso(
+  id_recurso INT(10) NOT NULL auto_increment PRIMARY KEY,
+  nomb_recurso VARCHAR(30) NOT NULL,
+  costo_recurso double(5,2) NOT NULL
+ );
+ 
+CREATE  TABLE Comision(
+  id_com INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id_Tipocomi INT(10) NOT NULL,
+  id_recurso INT(10) NOT NULL,
+  id_org INT(10) NOT NULL,
+  FOREIGN KEY(id_tipocomi) REFERENCES Tipocomision(id_tipocomi),
+  FOREIGN KEY(id_recurso) REFERENCES Recurso(id_recurso),
+  FOREIGN KEY(id_org) REFERENCES Organizador(id_org)
+ );
+
+CREATE  TABLE Ponente(
+   id_pon INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nomb_pon VARCHAR(45) NOT NULL,
+   ape_pon VARCHAR(45) NOT NULL,
+   nacionalidad_pon VARCHAR(45) NULL,
+   especialidad_pon VARCHAR(45) NULL,
+   foto_pon VARCHAR(45) NULL
+);
+
+CREATE TABLE Participante(
+   id_par INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   nomb_par VARCHAR(45) NOT NULL,
+   ape_par VARCHAR(45) NOT NULL,
+   email_par VARCHAR(45) NOT NULL,
+   celular_par VARCHAR(45) NULL
+);
+
+CREATE  TABLE Inscripcion(
+	id_evento int(10) NOT NULL,
+	id_par INT(10) NOT NULL,
+   FOREIGN KEY(id_evento) REFERENCES Evento(id_evento),
+   FOREIGN KEY(id_par) REFERENCES Participante(id_par)
+ );
+	
+CREATE  TABLE Participacion(
+	id_evento int(10) NOT NULL,
+	id_pon int(10) NOT NULL,
+   FOREIGN KEY(id_evento) REFERENCES Evento(id_evento),
+   FOREIGN KEY(id_pon) REFERENCES Ponente(id_pon)
+ );

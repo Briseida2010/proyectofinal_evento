@@ -1,0 +1,699 @@
+DELIMITER //
+
+CREATE PROCEDURE sp_S_usuarioLogin
+	(
+	pnomb_usu varchar(30),
+	ppass_usu varchar(50)
+	)
+	BEGIN
+		SELECT id_usu,nomb_usu,pass_usu,nivel_usu,estado_usu
+		FROM Usuario
+		WHERE nomb_usu = pnomb_usu AND
+				pass_usu = ppass_usu;
+				
+		END; //
+		
+DELIMITER &&
+
+
+----------------------------CONSULTAS----------------------------
+
+DELIMITER //
+CREATE PROCEDURE SP_S_Usuarios_Criterio
+(
+	pcriterio varchar(50),
+	pbusqueda varchar(50)
+)
+BEGIN
+	IF pcriterio = "codigo" THEN
+	SELECT id_usu,nomb_usu, pass_usu, nivel_usu, estado_usu
+	FROM Usuario
+	WHERE id_usu LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_usu ASC;
+	
+	ELSEIF pcriterio = "nombre" THEN
+	SELECT id_usu,nomb_usu, pass_usu, nivel_usu, estado_usu
+	FROM Usuario
+	WHERE nomb_usu LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_usu ASC;
+	
+	ELSEIF pcriterio = "nivel" THEN
+	SELECT id_usu,nomb_usu, pass_usu, nivel_usu, estado_usu
+	FROM Usuario
+	WHERE nivel_usu LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_usu ASC;
+	
+	ELSE 
+	SELECT id_usu,nomb_usu, pass_usu, nivel_usu, estado_usu
+	FROM Usuario
+	ORDER BY id_usu ASC;
+	
+	END IF;
+END;//
+DELIMITER &&
+
+
+
+DELIMITER //
+CREATE PROCEDURE SP_S_Organizador_Criterio
+(
+	pcriterio varchar(50),
+	pbusqueda varchar(50)
+)
+BEGIN
+	IF pcriterio = "codigo" THEN
+	SELECT id_org, nomb_org, apel_org, dni_org, cel_org
+	FROM Organizador
+	WHERE id_org LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_org ASC;
+	
+	ELSEIF pcriterio = "nombre" THEN
+	SELECT id_org, nomb_org, apel_org, dni_org, cel_org
+	FROM Organizador
+	WHERE nomb_org LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_org ASC;
+	
+	ELSEIF pcriterio = "dni" THEN
+	SELECT id_org, nomb_org, apel_org, dni_org, cel_org
+	FROM Organizador
+	WHERE dni_org LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_org ASC;
+	
+	ELSE 
+	SELECT id_org, nomb_org, apel_org, dni_org, cel_org
+	FROM Organizador
+	ORDER BY id_org ASC;
+	
+	END IF;
+END;//
+DELIMITER &&
+
+
+DELIMITER //
+CREATE PROCEDURE SP_S_Ponente_Criterio
+(
+	pcriterio varchar(50),
+	pbusqueda varchar(50)
+)
+BEGIN
+	IF pcriterio = "codigo" THEN
+	SELECT id_pon, nomb_pon, ape_pon, nacionalidad_pon, especialidad_pon, foto_pon
+	FROM Ponente
+	WHERE id_pon LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_pon ASC;
+	
+	ELSEIF pcriterio = "nombre" THEN
+	SELECT id_pon, nomb_pon, ape_pon, nacionalidad_pon, especialidad_pon, foto_pon
+	FROM Ponente
+	WHERE nomb_pon LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_pon ASC;
+	
+	ELSEIF pcriterio = "nacionalidad" THEN
+	SELECT id_pon, nomb_pon, ape_pon, nacionalidad_pon, especialidad_pon, foto_pon
+	FROM Ponente
+	WHERE nacionalidad_pon LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_pon ASC;
+	
+	ELSE 
+	SELECT id_pon, nomb_pon, ape_pon, nacionalidad_pon, especialidad_pon, foto_pon
+	FROM Ponente
+	ORDER BY id_pon ASC;
+	
+	END IF;
+END;//
+DELIMITER &&
+
+DELIMITER //
+CREATE PROCEDURE SP_S_Recurso_Criterio
+(
+	pcriterio varchar(50),
+	pbusqueda varchar(50)
+)
+BEGIN
+	IF pcriterio = "codigo" THEN
+	SELECT id_recurso, nomb_recurso, costo_recurso
+	FROM Recurso
+	WHERE id_recurso LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_recurso ASC;
+	
+	ELSEIF pcriterio = "nombre" THEN
+	SELECT id_recurso, nomb_recurso, costo_recurso
+	FROM Recurso
+	WHERE nomb_recurso LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_recurso ASC;
+	
+	ELSEIF pcriterio = "precio" THEN
+	SELECT id_recurso, nomb_recurso, costo_recurso
+	FROM Recurso
+	WHERE costo_recurso LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_recurso ASC;
+	
+	ELSE 
+	SELECT id_recurso, nomb_recurso, costo_recurso
+	FROM Recurso
+	ORDER BY id_recurso ASC;
+	
+	END IF;
+END;//
+DELIMITER &&	
+
+
+DELIMITER //
+CREATE PROCEDURE SP_S_Participante_Criterio
+(
+	pcriterio varchar(50),
+	pbusqueda varchar(50)
+)
+BEGIN
+	IF pcriterio = "codigo" THEN
+	SELECT id_par, nomb_par, ape_par, email_par, celular_par
+	FROM Participante
+	WHERE id_par LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_par ASC;
+	
+	ELSEIF pcriterio = "nombre" THEN
+	SELECT id_par, nomb_par, ape_par, email_par, celular_par
+	FROM Participante
+	WHERE nomb_par LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_par ASC;
+	
+	ELSEIF pcriterio = "apellido" THEN
+	SELECT id_par, nomb_par, ape_par, email_par, celular_par
+	FROM Participante
+	WHERE ape_par LIKE CONCAT("%",pbusqueda,"%")
+	ORDER BY id_par ASC;
+	
+	ELSE 
+	SELECT id_par, nomb_par, ape_par, email_par, celular_par
+	FROM Participante
+	ORDER BY id_par ASC;
+	
+	END IF;
+END;//
+DELIMITER &&	
+
+-------------------------ORRGANIZADOR-------------------------------------------------------------------------------------------------------------
+
+DELIMITER //
+
+CREATE PROCEDURE  sp_I_Organizador
+	(
+	pnomb_org varchar(30),
+	papel_org varchar(50),
+	pdni_org varchar(8),
+	pcel_org varchar(20)
+	)
+	BEGIN
+		INSERT INTO Organizador(nomb_org,apel_org,dni_org,cel_org)
+		VALUES(pnomb_org,papel_org,pdni_org,pcel_org);
+END;//
+DELIMITER&&
+
+DELIMITER //
+CREATE PROCEDURE sp_U_Organizador
+	(
+		pid_org INT(10),
+		pnomb_org varchar(30),
+		papel_org varchar(50),
+		pdni_org varchar(8),
+		pcel_org varchar(20)
+	)
+	
+	BEGIN 
+		UPDATE Organizador SET
+		id_org = pid_org,
+		nomb_org = pnomb_org,
+		apel_org = papel_org,
+		dni_org = pdni_org,
+		cel_org =	pcel_org
+		WHERE id_org = pid_org;
+		END;//
+
+DELIMITER &&	
+
+DELIMITER //
+	CREATE PROCEDURE sp_D_Organizador
+	(
+		pid_org int(10)
+	)
+	BEGIN
+		DELETE FROM usuario WHERE id_usu =pid_usu;
+	END;//
+
+DELIMITER &&
+
+DELIMITER //
+
+	CREATE PROCEDURE SP_S_Organizador
+	(
+	)
+	BEGIN
+		SELECT * FROM Organizador;
+	END;//
+	
+DELIMITER &&
+
+----------------------------------------------------RECURSO-------------------------------------------------------------------------------------
+
+
+DELIMITER //
+
+CREATE PROCEDURE sp_I_Recurso
+	(
+		
+		pnomb_recurso varchar(30),
+		pcosto_recurso double(5,2)
+		
+   )
+		
+		BEGIN 
+			INSERT INTO Recurso(nomb_recurso,costo_recurso)
+			values(pnomb_recurso,pcosto_recurso);
+			END;//
+			
+DELIMITER &&
+
+DELIMITER //
+CREATE PROCEDURE sp_U_Recurso
+	(
+	   pid_recurso int(10),
+		pnomb_recurso varchar(30),
+		pcosto_recurso double(5,2)
+	)
+	
+	BEGIN 
+		UPDATE Recurso SET
+		
+		nomb_recurso = pnomb_recurso,
+		costo_recurso = pcosto_recurso
+		WHERE id_recurso = pid_recurso;
+		END;//
+
+DELIMITER &&
+
+DELIMITER //
+	CREATE PROCEDURE sp_D_Recurso
+	(
+		pid_recurso int(10)
+	)
+	BEGIN
+		DELETE FROM Recurso WHERE id_recurso = pid_recurso;
+	END;//
+
+DELIMITER &&
+
+
+DELIMITER //
+
+	CREATE PROCEDURE sp_S_Recurso
+	(
+	)
+	BEGIN
+		SELECT * FROM Recurso;
+	END;//
+	
+DELIMITER &&
+
+----------------------------------------------------------------Ponente------------------------------------------------------------------------------
+
+DELIMITER //
+CREATE PROCEDURE  sp_I_Ponente
+	(
+	
+   pnomb_pon VARCHAR(45),
+   pape_pon VARCHAR(45),
+   pnacionalidad_pon VARCHAR(45),
+   pespecialidad_pon VARCHAR(45),
+   pfoto_pon VARCHAR(45)
+	)
+	BEGIN
+		INSERT INTO Ponente(nomb_pon,ape_pon,nacionalidad_pon,especialidad_pon,foto_pon)
+		VALUES(pnomb_pon,pape_pon,pnacionalidad_pon,pespecialidad_pon,pfoto_pon);
+END;//
+DELIMITER &&
+
+DELIMITER //
+CREATE PROCEDURE sp_U_Ponente
+	(
+   pid_pon INT(10),
+   pnomb_pon VARCHAR(45),
+   pape_pon VARCHAR(45),
+   pnacionalidad_pon VARCHAR(45),
+   pespecialidad_pon VARCHAR(45),
+   pfoto_pon VARCHAR(45)
+	)	
+	BEGIN 
+		UPDATE Ponente SET
+		
+		nomb_pon = pnomb_pon,
+		ape_pon = pape_pon,
+		nacionalidad_pon = pnacionalidad_pon,
+		especialidad_pon = pespecialidad_pon,
+		foto_pon = pfoto_pon
+		WHERE id_pon = pid_pon;
+		END;//
+
+DELIMITER &&
+
+
+DELIMITER //
+	CREATE PROCEDURE sp_D_Ponente
+	(
+		pid_pon int(10)
+	)
+	BEGIN
+		DELETE FROM Ponente WHERE id_pon = pid_pon;
+	END;//
+
+DELIMITER &&
+
+
+DELIMITER //
+
+	CREATE PROCEDURE sp_S_Ponente
+	(
+	)
+	BEGIN
+		SELECT * FROM Ponente;
+	END;//
+	
+DELIMITER &&
+
+-------------------------------------------------------------------Participante-------------------------------------------------------------------------
+
+DELIMITER //
+
+CREATE PROCEDURE  sp_I_Participante
+	(
+   pnomb_par VARCHAR(45),
+   pape_par VARCHAR(45),
+   pemail_par VARCHAR(45),
+   pcelular_par VARCHAR(45)
+	)
+	BEGIN
+		INSERT INTO Participante(nomb_par,ape_par,email_par,celular_par)
+		VALUES(pnomb_par,pape_par,pemail_par,pcelular_par);
+END;//
+DELIMITER &&
+
+
+DELIMITER //
+CREATE PROCEDURE sp_U_Participante
+	(
+   pid_par INT(10),
+   pnomb_par VARCHAR(45),
+   pape_par VARCHAR(45),
+   pemail_par VARCHAR(45),
+   pcelular_par VARCHAR(45)
+	)	
+	BEGIN 
+		UPDATE Participante SET
+
+		nomb_par = pnomb_par,
+		ape_par = pape_par,
+		email_par = pemail_par,
+		celular_par = pcelular_par
+		WHERE id_par = pid_par;
+		END;//
+
+DELIMITER &&
+
+DELIMITER //
+	CREATE PROCEDURE sp_D_Participante
+	(
+		pid_par int(10)
+	)
+	BEGIN
+		DELETE FROM Partipante WHERE id_par = pid_par;
+	END;//
+DELIMITER &&
+
+DELIMITER //
+
+	CREATE PROCEDURE sp_S_Participante
+	(
+	)
+	BEGIN
+		SELECT * FROM Participante;
+	END;//
+	
+DELIMITER &&
+
+------------------------------------------------------------------Evento-----------------------------------------------------------------------
+
+
+DELIMITER //
+
+CREATE PROCEDURE  sp_I_Evento
+   (
+   
+   pid_tipoevento int(10),
+	pid_usu int(10),
+	pid_org int(10),
+	pfechainicio_evento varchar(30),
+	pfechafinal_evento varchar(30),
+   pnomb_evento varchar(30),
+	pinf_evento varchar(30),
+	plugar_evento varchar(30)
+	)
+	BEGIN
+		INSERT INTO Evento(id_tipoevento,id_usu,id_org,fechainicio_evento,fechafinal_evento,nomb_evento,inf_evento,lugar_evento)
+		VALUES(pid_tipoevento,pid_usu,pid_org,pfechainicio_evento,fechafinal_evento,pnomb_evento,pinf_evento,plugar_evento);
+END;//
+DELIMITER &&
+
+DELIMITER //
+CREATE PROCEDURE sp_U_Evento
+	(
+   pid_evento int(10),
+   pid_tipoevento int(10),
+	pid_usu int(10),
+	pid_org int(10),
+	pfechainicio_evento varchar(30),
+	pfechafinal_evento varchar(30),
+   pnomb_evento varchar(30),
+	pinf_evento varchar(30),
+	plugar_evento varchar(30)
+	)	
+	BEGIN 
+		UPDATE Evento SET
+	
+		id_tipoevento = pid_tipoevento,
+		id_usu = pid_usu,
+		id_org = pid_org,
+		fechainicio_evento = pfechainicio_evento,
+		fechafinal_evento = pfechafinal_evento,
+		nomb_evento = pnomb_evento,
+		inf_evento = pinf_evento,
+		lugar_evento = plugar_evento
+		WHERE id_evento = pid_evento;
+		END;//
+
+DELIMITER &&
+
+DELIMITER //
+	CREATE PROCEDURE sp_D_Evento
+	(
+		pid_evento int(10)
+	)
+	BEGIN
+		DELETE FROM Evento WHERE id_Evento = pid_Evento;
+	END;//
+
+DELIMITER &&
+
+DELIMITER //
+
+	CREATE PROCEDURE sp_S_Evento
+	(
+	)
+	BEGIN
+		SELECT * FROM Evento;
+	END;//
+	
+DELIMITER &&
+
+
+-----------------------------------------------------------------------------------------------TIPOEVENTO--------------------------------------------------------------------------
+
+
+DELIMITER //
+
+CREATE PROCEDURE  sp_I_TipoEvento
+	(
+   pid_tipoevento int(10),
+	pnomb_tipoevento varchar(100)
+	)
+	BEGIN
+		INSERT INTO TipoEvento(id_tipoevento,nomb_tipoevento)
+		VALUES(pid_tipoevento,pnomb_tipoevento);
+END;//
+DELIMITER &&
+
+DELIMITER //
+CREATE PROCEDURE sp_U_TipoEvento
+	(
+   pid_tipoevento int(10),
+	pnomb_tipoevento varchar(100)
+	)	
+	BEGIN 
+		UPDATE TipoEvento SET
+		id_tipoevento = pid_tipoevento,
+		nomb_tipoevento = pnomb_tipoevento
+		WHERE id_tipoevento = pid_tipoevento;
+		END;//
+
+DELIMITER &&
+
+DELIMITER //
+	CREATE PROCEDURE sp_D_TipoEvento
+	(
+		pid_tipoevento int(10)
+	)
+	BEGIN
+		DELETE FROM TipoEvento WHERE id_tipoevento = pid_tipoevento;
+	END;//
+
+DELIMITER &&
+
+
+DELIMITER //
+
+	CREATE PROCEDURE sp_S_TipoEvento
+	(
+	)
+	BEGIN
+		SELECT * FROM TipoEvento;
+	END;//
+	
+DELIMITER &&
+
+-----------------------------------------------------------------------------------------TIPOCOMISION-----------------------------------------------------------------------
+
+DELIMITER //
+
+CREATE PROCEDURE  sp_I_TipoComision
+	(
+   pid_Tipocomi int(10),
+	pnomb_Tipocomi VARCHAR(45)
+	)
+	BEGIN
+		INSERT INTO TipoComision(id_Tipocomi,nomb_Tipocomi)
+		VALUES(pid_Tipocomi,pnomb_Tipocomi);
+END;//
+DELIMITER &&
+
+DELIMITER //
+CREATE PROCEDURE sp_U_TipoComision
+	(
+   pid_Tipocomi int(10),
+	pnomb_Tipocomi varchar(45)
+	)	
+	BEGIN 
+		UPDATE TipoComision SET
+		id_Tipocomi = pid_Tipocomi,
+		nomb_Tipocomi = pnomb_Tipocomi
+		WHERE id_Tipocomi = pid_Tipocomi;
+		END;//
+
+DELIMITER &&
+
+DELIMITER //
+	CREATE PROCEDURE sp_D_TipoComision
+	(
+		pid_Tipocomi int(10)
+	)
+	BEGIN
+		DELETE FROM TipoComision WHERE id_Tipocomi = pid_Tipocomi;
+	END;//
+
+DELIMITER &&
+
+
+DELIMITER //
+
+	CREATE PROCEDURE sp_S_TipoComision
+	(
+	)
+	BEGIN
+		SELECT * FROM TipoComision;
+	END;//
+	
+DELIMITER &&
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------USUARIO-----------------------------------------------
+
+
+DELIMITER //
+
+CREATE PROCEDURE sp_I_Usuario
+	  (
+			pid_usu int(10),
+			pnomb_usu varchar(30),
+			ppass_usu varchar(50),
+			pnivel_usu varchar(45),
+			pestado_usu varchar(15)
+		
+		)
+		
+		BEGIN 
+			INSERT INTO usuario(id_usu,nomb_usu,pass_usu,nivel_usu,estado_usu)
+			values(pid_usu,pnomb_usu,ppass_usu,pnivel_usu,pestado_usu);
+			END;//
+			
+DELIMITER &&
+
+
+DELIMITER //
+
+CREATE PROCEDURE sp_U_Usuario
+	(
+			pid_usu int(10),
+			pnomb_usu varchar(30),
+			ppass_usu varchar(50),
+			pnivel_usu varchar(45),
+			pestado_usu varchar(15)
+	)
+	
+	BEGIN 
+		UPDATE Usuario SET
+		id_usu = pid_usu,
+		nomb_usu = pnomb_usu,
+		pass_usu= ppass_usu,
+		nivel_usu=pnivel_usu,
+		estado_usu=	pestado_usu
+		WHERE id_usu = pid_usu;
+		END;//
+
+DELIMITER &&
+
+
+DELIMITER //
+	CREATE PROCEDURE sp_D_Usuario
+	(
+		pid_usu int(10)
+	)
+	BEGIN
+		DELETE FROM usuario WHERE id_usu =pid_usu;
+	END;//
+
+DELIMITER &&
+
+DELIMITER //
+
+	CREATE PROCEDURE SP_S_Usuario
+	(
+	)
+	BEGIN
+		SELECT * FROM usuario;
+	END;//
+	
+DELIMITER &&
+

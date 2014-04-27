@@ -1,0 +1,35 @@
+
+
+call sp_I_TipoEvento('1','Conciertos');
+call sp_I_TipoEvento('2','Reuniones');
+call sp_I_TipoEvento('3','Ponderados');
+call sp_I_TipoEvento('4','Tecnologicos');
+
+call sp_I_TipoComision('1','Organizacion');
+call sp_I_TipoComision('2','Inscripcion');
+call sp_I_TipoComision('3','Publicidad');
+
+call sp_I_Recurso('1','Hojas','0.10');
+call sp_I_Recurso('2','Bebidas','1.00');
+call sp_I_Recurso('3','Bebidas Alcoholicas','3.50');
+call sp_I_Recurso('4','Regalos','10.00');
+
+call sp_I_Ponente('1','Diego','Guevara','Peru','Sistemas','No Foto');
+call sp_I_Ponente('2','Alonso','Salsedo','Peru','Sistemas','No Foto');
+call sp_I_Ponente('3','Miguel','Manrique','Chile','Comunicacion','No Foto');
+
+call sp_I_Participante('1','Briseida','Olaya','bolaya@hotmail.com','938273812');
+call sp_I_Participante('2','Miguelon','Bustinza','mbustinza@hotmail.com','978983812');
+call sp_I_Participante('3','Alfonso','Rosario','arosario@hotmail.com','938432812');
+
+call sp_I_Usuario('1','elanchipa','123','Administrador','Activo');
+call sp_I_Usuario('2','ggallegos','123','Cliente','Activo');
+call sp_I_Usuario('3','ppamela','123','Usuario','Inactivo');
+
+call sp_I_Organizador('1','Luis','Palacios','12345678','975678123');
+call sp_I_Organizador('2','Franciso','Acosta','87654321','897567234');
+call sp_I_Organizador('3','Miguel','Arroyo','23456789','789465321');
+
+call sp_I_Evento('1','1','2','3','10/10/2013','10/12/2013','TI Empresario 2014','Evento Tecnologico','Plaza de Armas Tacna');
+call sp_I_Evento('2','2','1','2','08/10/2013','11/12/2013','Electro Dance 2013','Evento Musical','Coliseo Zela');
+call sp_I_Evento('3','3','1','3','09/11/2013','10/12/2013','Danzas Culturales 2013','Evento Cultural','Local Miculla');
