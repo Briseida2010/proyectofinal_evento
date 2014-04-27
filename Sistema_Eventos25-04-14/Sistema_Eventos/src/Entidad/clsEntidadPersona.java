@@ -11,6 +11,7 @@ package Entidad;
  * @author Charlie
  */
 public class clsEntidadPersona {
+    
     int idPersona;
     String nombres;
     String apellidos;

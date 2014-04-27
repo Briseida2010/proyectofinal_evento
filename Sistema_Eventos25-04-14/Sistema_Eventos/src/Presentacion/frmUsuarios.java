@@ -23,8 +23,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
     public frmUsuarios() {
         initComponents();
         cargarTabla("");
+        FrmMaster.BloquearControles(pnlForm);
     }
-    
+            
     @Override
     public void cargarTabla(String busqueda){
         listaUsuarios = clsUsuario.listarUsuarios(busqueda);
@@ -53,7 +54,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
     public void seleccionarTabla(){
         int fila = tblUsuario.getSelectedRow();
         if (fila==-1){
-            JOptionPane.showMessageDialog(null, "Debes seleccionar un R");
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una fila");
         }else{
             _objUsuario = listaUsuarios.get(fila);
             txtUsuario.setText(_objUsuario.getUsuario());
@@ -158,6 +159,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
                 "idPersona", "Nombre", "Apellidos", "Email", "Usuario", "Password", "Inscripcion", "Evento", "Gasto", "Programa", "Usuario", "Activo"
             }
         ));
+        tblUsuario.setColumnSelectionAllowed(true);
         tblUsuario.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -392,6 +394,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
       isNuevoActivo=true;
+      FrmMaster.HabilitarControles(pnlForm);
       FrmMaster.LimpiarCampos(pnlForm);
       FrmMaster.BloquearBotones(pnlBotones, "Nuevo");
     }//GEN-LAST:event_btnNuevoActionPerformed
@@ -404,6 +407,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
         }
         FrmMaster.BloquearBotones(pnlBotones, "Guardar");
         FrmMaster.LimpiarCampos(pnlForm);
+        FrmMaster.BloquearControles(pnlForm);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -413,6 +417,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         FrmMaster.BloquearBotones(pnlBotones, "Cancelar");
+        FrmMaster.LimpiarCampos(pnlForm);
+        FrmMaster.BloquearControles(pnlForm);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -450,6 +456,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenim
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    
 
     
 

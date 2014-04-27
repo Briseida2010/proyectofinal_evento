@@ -48,7 +48,5 @@ public class clsEntidadEvento {
     public void setFechaFinal(String fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
-    
-    
-    
+        
 }

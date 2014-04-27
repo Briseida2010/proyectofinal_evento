@@ -32,7 +32,6 @@ public class clsUsuario {
             CallableStatement statement = cnx.prepareCall("{call sp_I_Usuario(?,?,?,?,?,?,?,?,?,?,?,?)}");
             statement = asignarValores(statement,objUsuario);
             statement.execute();
-            
         }catch(SQLException ex){
             ex.printStackTrace();
         }

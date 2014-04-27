@@ -76,7 +76,7 @@ public class FrmMaster {
                     btn.setEnabled(false);
                 }
                 else if(btn.getText().equals("Modificar")){
-                    btn.setEnabled(false);
+                    btn.setEnabled(true);
                 }                
             }           
         }
@@ -141,6 +141,32 @@ public class FrmMaster {
         DefaultTableModel dtm = (DefaultTableModel)tabla.getModel();
         while(dtm.getRowCount()>0){
             dtm.removeRow(0);
+        }
+    }
+    
+    public static void BloquearControles(JPanel pnlControles){
+        for(Component c : pnlControles.getComponents()){
+            if(c instanceof JTextField){
+                JTextField txt = (JTextField)c;
+                txt.setEnabled(false);
+            }
+            else if(c instanceof JCheckBox){
+                JCheckBox chk = (JCheckBox)c;
+                chk.setEnabled(false);
+            }
+        }
+    }
+    
+    public static void HabilitarControles(JPanel pnlControles){
+        for(Component c : pnlControles.getComponents()){
+            if(c instanceof JTextField){
+                JTextField txt = (JTextField)c;
+                txt.setEnabled(true);
+            }
+            else if(c instanceof JCheckBox){
+                JCheckBox chk = (JCheckBox)c;
+                chk.setEnabled(true);
+            }
         }
     }
 }
