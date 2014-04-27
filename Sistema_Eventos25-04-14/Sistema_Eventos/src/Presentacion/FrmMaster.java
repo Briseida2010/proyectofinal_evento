@@ -87,16 +87,16 @@ public class FrmMaster {
             if(c instanceof JButton){
                 JButton btn = (JButton)c;
                 if(btn.getText().equals("Nuevo")){
-                    btn.setEnabled(true);
+                    btn.setEnabled(false);
                 }
                 else if(btn.getText().equals("Guardar")){
-                    btn.setEnabled(false);
+                    btn.setEnabled(true);
                 }
                 else if(btn.getText().equals("Cancelar")){
-                    btn.setEnabled(false);
+                    btn.setEnabled(true);
                 }
                 else if(btn.getText().equals("Modificar")){
-                    btn.setEnabled(true);
+                    btn.setEnabled(false);
                 }                
             }                 
         }

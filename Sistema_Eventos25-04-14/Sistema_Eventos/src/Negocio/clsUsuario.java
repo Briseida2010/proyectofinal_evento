@@ -40,7 +40,7 @@ public class clsUsuario {
     
     public static void modificarUsuario (clsEntidadUsuario objUsuario){
         try{
-            CallableStatement statement = cnx.prepareCall("{call sp_I_Usuario(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement statement = cnx.prepareCall("{call sp_U_Usuario(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             statement.setInt("pidPersona", objUsuario.getIdPersona());
             statement = asignarValores(statement,objUsuario);
             statement.executeUpdate();
