@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Charlie
  */
+
 public class FrmMaster {
     public static void LimpiarCampos(JPanel pnlForm){
         for(Component c : pnlForm.getComponents()){

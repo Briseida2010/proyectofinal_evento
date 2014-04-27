@@ -14,16 +14,18 @@ import java.util.Iterator;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class frmUsuarios extends javax.swing.JInternalFrame {
+public class frmUsuarios extends javax.swing.JInternalFrame implements IMantenimiento {
 
     ArrayList<clsEntidadUsuario> listaUsuarios;  
+    clsEntidadUsuario objUsuario;
     
     public frmUsuarios() {
         initComponents();
         cargarTabla("");
     }
     
-    private void cargarTabla(String busqueda){
+    @Override
+    public void cargarTabla(String busqueda){
         listaUsuarios = clsUsuario.listarUsuarios(busqueda);
         DefaultTableModel dtm = (DefaultTableModel)tblUsuario.getModel();
         FrmMaster.limpiarTabla(tblUsuario);
@@ -46,12 +48,13 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         tblUsuario.setModel(dtm);
     }
     
-    private void seleccionarTabla(){
+    @Override
+    public void seleccionarTabla(){
         int fila = tblUsuario.getSelectedRow();
         if (fila==-1){
             JOptionPane.showMessageDialog(null, "Debes seleccionar un R");
         }else{
-            clsEntidadUsuario objUsuario = listaUsuarios.get(fila);
+            objUsuario = listaUsuarios.get(fila);
             txtUsuario.setText(objUsuario.getUsuario());
             txtPassword.setText(objUsuario.getPassword());
             txtNombre.setText(objUsuario.getNombres());
@@ -65,8 +68,9 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             FrmMaster.cambiarEstadoCheckBox(chkUsuario, objUsuario.getUsuario());
         }
     }
-        
-    private void guardar(){
+    
+    @Override
+    public void guardar(){
         clsEntidadUsuario objUsuario = new clsEntidadUsuario();
         objUsuario.setNombres(txtNombre.getText());
         objUsuario.setApellidos(txtApellidos.getText());
@@ -82,7 +86,11 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         clsUsuario.agregarUsuario(objUsuario);
         cargarTabla("");
     }
- 
+    
+    @Override
+    public void modificar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -420,6 +428,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    
 
 
 }
